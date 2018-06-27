@@ -5,7 +5,9 @@
 typedef struct Salesman_t {
 	Route *startingRoute;
 	Route *bestRoute;
-	double bestFitness;
+	Route *worstRoute;
+	double bestDistance;
+	double worstDistance;
 }Salesman;
 void init(int num);
 double compute();

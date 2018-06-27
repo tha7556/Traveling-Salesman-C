@@ -1,31 +1,37 @@
 #include "../headers/Route.h"
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <math.h>
+#include <time.h>
+int freed = 0;
 double randNum() {
-	double range = 20 - 0;
+	double range = 1000 - 0;
 	double div = RAND_MAX / range;
 	return rand() / div;
 }
 Route *routeInit(int num) {
+	srand(time(NULL)); //Seed for random, if removed it will always be the same sequence. Could be useful debug?
 	Route *route = (Route*)calloc(sizeof(Route),1);
-	route->cities = (City**)malloc(sizeof(City*)*num); //Valgrand is reporting this memory not being freed
+	route->cities = (City**)malloc(sizeof(City*)*num);
 	route->numberOfCities = num;
 	char current = 'A';
 	for(int i = 0; i < num; i++, current++) {
 		route->cities[i] = cityInit(randNum(), randNum(), current);
 	}
-	route->distance = calcDistance(route);
+	calcDistance(route);
 	return route;
 }
 Route *routeInitFromCities(City **cities, int num) {
 	Route *route = (Route*)calloc(sizeof(Route),1);
-	route->cities = cities;
+	route->cities = (City**)malloc(sizeof(City*)*num);
+	for(int i = 0; i < num; i++) {
+		route->cities[i] = cities[i];
+	}
 	route->numberOfCities = num;
-	route->distance = calcDistance(route);
+	calcDistance(route);
 	return route;
 }
-double calcDistance(Route *route) {
+void calcDistance(Route *route) {
 	double distance = 0.0;
 	for(int i = 0; i < route->numberOfCities; i++) {
 		if(i < route->numberOfCities-1) 
@@ -33,13 +39,19 @@ double calcDistance(Route *route) {
 		else
 			distance += distanceBetween(route->cities[i], route->cities[0]);
 	}
-	return distance;
+	route->distance = distance;
+}
+double getDistance(Route *route) {
+	calcDistance(route);
+	return sqrt(route->distance);
 }
 void freeRoute(Route *route) {
-	for(int i = 0; i < route->numberOfCities; i++) {
-		if(route->cities[i] != NULL) 
+	if(freed == 0) {
+		for(int i = 0; i < route->numberOfCities; i++) {
 			free(route->cities[i]);
-		route->cities[i] = NULL;
+		}
+		freed = 1;
 	}
+	free(route->cities);
 	free(route);	
 }

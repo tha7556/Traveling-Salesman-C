@@ -11,5 +11,5 @@ City *cityInit(double x, double y, char id) {
 	return city;
 }
 double distanceBetween(City *a, City *b) {
-	return sqrt(pow(a->x-b->x,2) + pow(a->y-b->y,2));
+	return (pow(a->x-b->x,2) + pow(a->y-b->y,2));
 }
