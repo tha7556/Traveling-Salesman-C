@@ -4,14 +4,19 @@
 #include <time.h>
 #include <math.h>
 
+long factorial(long n);
+
 Salesman salesman;
 long currentIndex = 0;
-void printRoute(Route *route) {
-	for(int i = 0; i < route->numberOfCities; i++) {
-		printf("%c ",route->cities[i]->id);
-	}
-	printf("%c %f\n",route->cities[0]->id, getDistance(route));
-}
+double targetIndex;
+
+long factorial(long n) {
+	if(n < 0)
+		return n * factorial(abs(n)-1);
+	if(n <= 1)
+		return 1;
+	return n * factorial(n - 1);
+}	
 void init(int num) {
 	Route *route = routeInit(num);
 	salesman.startingRoute = route;
@@ -67,9 +72,15 @@ void evaluateRoute(Route *route) {
 			salesman.worstRoute->cities[i] = route->cities[i]; 
 	}
 	if(currentIndex % 1000000 == 0 || currentIndex == 0) {
-		printf("%f%%\r",currentIndex/622702080.0);
+		printf("%f%%\r",currentIndex/targetIndex);
 	}
 	currentIndex++;
+}
+void printRoute(Route *route) {
+	for(int i = 0; i < route->numberOfCities; i++) {
+		printf("%c ",route->cities[i]->id);
+	}
+	printf("%c %f\n",route->cities[0]->id, getDistance(route));
 }
 void freeSalesman() {
 	freeRoute(salesman.startingRoute);
@@ -80,6 +91,7 @@ int main(int nArgs, char **args) {
 	if(nArgs == 2) {
 		const int num = atoi(args[1]);
 		init(num);
+		targetIndex = factorial(num-1)/100;
 		printf("Computation time: %f seconds\n",compute());
 		freeSalesman();
 		}

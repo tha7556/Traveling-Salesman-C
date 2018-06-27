@@ -12,6 +12,7 @@ typedef struct Salesman_t {
 void init(int num);
 double compute();
 void evaluateRoute(Route *route);
+void printRoute(Route *route);
 //Frees the salesman's routes
 void freeSalesman();
 
