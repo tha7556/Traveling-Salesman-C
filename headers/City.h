@@ -8,5 +8,6 @@ typedef struct City_t {
 }City;
 
 double distanceBetween(City *a, City *b);
-City *init(double x, double y, char id);
+City *cityInit(double x, double y, char id);
+void freeCity(City *city);
 #endif

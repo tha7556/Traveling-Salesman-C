@@ -3,13 +3,15 @@
 #include "City.h"
 
 typedef struct Route_t {
-	City *cities;
+	City **cities;
 	int numberOfCities;
 	double distance;
 }Route;
 
-Route *init(int num);
-Route *initFromCities(City *cities);
-double calcDistance();
+Route *routeInit(int num);
+Route *routeInitFromCities(City **cities, int numberOfCities);
+double calcDistance(Route *route);
+//Frees the pointer to the route as well as all of the cities contained by it
+void freeRoute(Route *route);
 
 #endif
