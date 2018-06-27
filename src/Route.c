@@ -9,7 +9,7 @@ double randNum() {
 }
 Route *routeInit(int num) {
 	Route *route = (Route*)calloc(sizeof(Route),1);
-	route->cities = (City**)malloc(sizeof(City*)*num); //This memory isn't freed
+	route->cities = (City**)malloc(sizeof(City*)*num); //Valgrand is reporting this memory not being freed
 	route->numberOfCities = num;
 	char current = 'A';
 	for(int i = 0; i < num; i++, current++) {

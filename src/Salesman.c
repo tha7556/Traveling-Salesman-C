@@ -51,10 +51,13 @@ void freeSalesman() {
 	freeRoute(salesman.bestRoute);
 }
 int main(int nArgs, char **args) {
-	const int num = atoi(args[1]);
-	init(num);
-	printf("Computation time: %f seconds\n",compute());
-	
-	freeSalesman();
-	printf("End!\n");
+	if(nArgs == 2) {
+		const int num = atoi(args[1]);
+		init(num);
+		printf("Computation time: %f seconds\n",compute());
+		freeSalesman();
+		printf("End!\n");
+	}
+	else
+		printf("Requires argument for number of cities\n");
 }
