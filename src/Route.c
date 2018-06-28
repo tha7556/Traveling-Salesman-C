@@ -25,9 +25,9 @@ static double randNum(int low, int high) {
 * @param num The number of cities
 */
 static void initDistMat(City **cities, int num) {
-	distMat = malloc(sizeof(City*) * num);
+	distMat = (double**)malloc(sizeof(City*) * num);
 	for(int i = 0; i < num; i++) {
-		distMat[i] = malloc(sizeof(City) * num);
+		distMat[i] = (double*)malloc(sizeof(City) * num);
 		for(int j = 0; j < num; j++) {
 			distMat[cities[i]->id-'A'][cities[j]->id-'A'] = distanceBetween(cities[i], cities[j]);
 		}

@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <time.h>
 #include <math.h>
-#include <inttypes.h>
 
 Salesman salesman;
 long long currentIndex = 0;
@@ -106,7 +105,7 @@ void evaluateRoute(Route *route) {
 char *formatTime(double seconds) {
 	int hours = 0, minutes = 0;
 	double secs = seconds;
-	char *result = malloc(sizeof(char) * 50);
+	char *result = (char*)malloc(sizeof(char) * 45);
 	if(seconds < 60)
 		sprintf(result, "%.2f seconds",seconds);
 	else {
